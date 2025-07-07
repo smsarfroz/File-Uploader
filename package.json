@@ -17,6 +17,10 @@
   "scripts": {
     "start": "node --watch app.js"
   },
+  "compilerOptions":{
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smsarfroz/File-Uploader-.git"
@@ -31,6 +35,8 @@
   "devDependencies": {
     "@types/node": "^24.0.10",
     "prisma": "^6.11.1",
-    "tsx": "^4.20.3"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
   }
 }
