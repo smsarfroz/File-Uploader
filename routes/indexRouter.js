@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "../config/passport.js";
-import prisma from "../queries.ts";
+import prisma from "../queries.js";
 
 const indexRouter = Router();
 
