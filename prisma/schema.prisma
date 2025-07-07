@@ -14,15 +14,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Message {
-   id        Int      @id @default(autoincrement())
-   content   String   @db.VarChar(255) 
-   author    String   @db.VarChar(255)     
+model users {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(255)
+  password String @db.VarChar(255)
 }
 
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String   @db.Text  
-  expiresAt   DateTime
+  data      String   @db.Text
+  expiresAt DateTime
 }
