@@ -1,5 +1,6 @@
 import { Router } from "express";
-import passport from "passport";
+import passport from "../config/passport.js";
+import prisma from "../queries.ts";
 
 const indexRouter = Router();
 
@@ -11,6 +12,7 @@ indexRouter.post("/sign-up", async(req, res) => {
     try {
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
+        await prisma.adduser(username, hashedPassword);
         res.redirect("/");
     } catch (error) {
         console.error(error);

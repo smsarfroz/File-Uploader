@@ -1,6 +1,6 @@
 import session from 'express-session';
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import prisma from "index.ts";
+import prisma from "../index.ts";
 
 export default function getSessionMiddleware() {
   return session({
