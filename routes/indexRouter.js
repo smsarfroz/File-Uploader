@@ -51,4 +51,6 @@ indexRouter.get("/logout", (req, res, next) => {
     })
 })
 
+indexRouter.get("/upload", async(req, res) => res.render("upload"));
+
 export default indexRouter;
