@@ -1,12 +1,12 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import prisma from "../index.ts";
+import prisma from "../index.js";
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await prisma.user.findUnique({ where: { username }});
+      const user = await prisma.users.findUnique({ where: { username: username }});
 
       if (!user) {
         return done(null, false, { message: "Incorrect username" });

@@ -4,9 +4,23 @@ import prisma from "../queries.js";
 
 const indexRouter = Router();
 
-indexRouter.get("/", async(req, res) => res.render("index"));
+indexRouter.get("/", async(req, res) => {
+    try {
+        res.render("index");
+    } catch(error) {
+        console.error(error);
+        next( new Error(error));
+    }
+});
 
-indexRouter.get("/sign-up", async(req, res) => res.render("sign-up"));
+indexRouter.get("/sign-up", async(req, res) => {
+    try {
+        res.render("sign-up");
+    } catch(error) {
+        console.error(error);
+        next( new Error(error));
+    }
+});
 
 indexRouter.post("/sign-up", async(req, res) => {
     try {
@@ -16,7 +30,7 @@ indexRouter.post("/sign-up", async(req, res) => {
         res.redirect("/");
     } catch (error) {
         console.error(error);
-        next(error);
+        next( new Error(error));
     }
 });
 

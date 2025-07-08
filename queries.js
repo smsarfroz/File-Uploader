@@ -1,4 +1,4 @@
-import prisma from "./index.ts";
+import prisma from "./index.js";
 
 async function adduser(username, password) {
     try {
