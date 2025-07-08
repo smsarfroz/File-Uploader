@@ -18,6 +18,8 @@ model users {
   id       Int    @id @default(autoincrement())
   username String @db.VarChar(255)
   password String @db.VarChar(255)
+  
+  @@unique([username])
 }
 
 model Session {

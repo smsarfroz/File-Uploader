@@ -37,14 +37,10 @@ indexRouter.post("/sign-up", async(req, res) => {
 
 indexRouter.get("/login", async(req, res) => res.render("login"));
 
-indexRouter.get("/login", passport.authenticate("local", {
+indexRouter.post("/login", passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login"
 }));
-
-indexRouter.post("/login", async(req, res) => {
-    
-});
 
 indexRouter.get("/logout", (req, res, next) => {
     req.logout((err) => {

@@ -1,10 +1,17 @@
-<head>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<nav>
-    <h2>File Uploader</h2>
-    <div class="navigation">
-        <h3><a href="/sign-up">Sign Up</a></h3>
-        <h3><a href="/login">Login</a></h3>
-    </div>
-</nav>
+<% if (locals.currentUser) {%>
+    <nav>
+        <a href="/"><h3>File Uploader | Welcome <%- currentUser %></h3></a>
+        <div class="navigation">
+            <!-- <h3><a href="/sign-up">Sign Up</a></h3> -->
+            <h3><a href="/logout">Log out</a></h3>
+        </div>
+    </nav>
+<%} else {%>
+    <nav>
+        <a href="/"><h2>File Uploader</h2></a>
+        <div class="navigation">
+            <h3><a href="/sign-up">Sign Up</a></h3>
+            <h3><a href="/login">Login</a></h3>
+        </div>
+    </nav>
+<%}%>
