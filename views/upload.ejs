@@ -14,8 +14,14 @@
         </div>
     </nav>
     
-    <label for="avatar">Choose a file to upload:</label><br />
-    <input id="avatar" type="file" name="avatar" accept="image/png, image/jpeg" />
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="avatar">Choose a file to upload:</label><br />
+            <input id="avatar" type="file" name="uploaded_file" accept="*/*" />
+        </div>
+
+        <button type="submit">Upload</button>
+    </form>
 
     <%- include('footer') %>
 </body>

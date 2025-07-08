@@ -2,6 +2,8 @@ import { Router } from "express";
 import passport from "../config/passport.js";
 import prisma from "../queries.js";
 import bcrypt from "bcryptjs";
+import multer from "multer";
+const upload = multer({ dest: './public/data/uploads/' })
 
 const indexRouter = Router();
 
@@ -52,5 +54,8 @@ indexRouter.get("/logout", (req, res, next) => {
 })
 
 indexRouter.get("/upload", async(req, res) => res.render("upload"));
+indexRouter.post("/upload", upload.single('uploaded_file'), function (req, res) {
+    console.log(req.file, req.body);
+})
 
 export default indexRouter;
