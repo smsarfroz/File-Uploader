@@ -75,3 +75,15 @@ input::file-selector-button {
   border: thin solid grey;
   border-radius: 3px;
 }
+
+.uploadfilesfolder {
+    display: flex;
+    gap: 2.4vw;
+}
+
+dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
