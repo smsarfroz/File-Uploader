@@ -8,13 +8,61 @@ async function adduser(username, password) {
                 password: password,
             },
         });
-        console.log(user);
+        // console.log(user);
     }
     catch (error) {
         console.error(error);
     }
 }
 
+async function getcontentbyfolder_id(id) {
+    try {
+        const folders = await prisma.folders.findMany({
+            where: {
+                folder_id: id
+            }
+        })
+        const files = await prisma.files.findMany({
+            where: {
+                folder_id: id
+            }
+        })
+        const content = [...folders, ...files];
+        console.log(content);
+        return content;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getfolderbyid(id) {
+    try {
+        const folder = await prisma.folders.findUnique({
+            where : {
+                id : id
+            }
+        })
+        return folder;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getfilebyid(id) {
+    try {
+        const file = await prisma.files.findUnique({
+            where : {
+                id : id
+            }
+        })
+        return file;
+    } catch (error) {
+        console.error(error);
+    }
+}
 export default {
     adduser,
+    getcontentbyfolder_id,
+    getfolderbyid,
+    getfilebyid
 }

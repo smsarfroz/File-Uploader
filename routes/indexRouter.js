@@ -57,4 +57,16 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), function (req, r
     console.log(req.file, req.body);
 })
 
+indexRouter.get("/folder/:folderid", async(req, res) => {
+    const { folderid } = req.params;
+    const folder = await prisma.getfolderbyid(folderid);
+    const content = await prisma.getcontentbyfolder_id(folderid);
+    res.render("", {folder: folder, content: content});
+});
+
+indexRouter.get("/file/:fileid", async(req, res) => {
+    const { fileid } = req.params; 
+
+});
+
 export default indexRouter;
