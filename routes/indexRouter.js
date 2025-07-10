@@ -53,8 +53,7 @@ indexRouter.get("/logout", (req, res, next) => {
     })
 })
 
-indexRouter.get("/upload", async(req, res) => res.render("upload"));
-indexRouter.post("/upload", upload.single('uploaded_file'), function (req, res) {
+indexRouter.post("/uploadfile", upload.single('uploaded_file'), function (req, res) {
     console.log(req.file, req.body);
 })
 

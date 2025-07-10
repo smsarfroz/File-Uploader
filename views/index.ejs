@@ -27,7 +27,7 @@
         </dialog>
 
         <dialog class="addfile">
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="/uploadfile" method="POST" enctype="multipart/form-data">
                 <div>
                     <label for="avatar">Choose a file to upload:</label><br />
                     <input id="avatar" type="file" name="uploaded_file" accept="*/*" />
@@ -48,7 +48,7 @@
         const addbuttonfolder = document.querySelector(".addbuttonfolder");
         addbuttonfolder.addEventListener('click', () => {
             addfolder.close();
-            const foldername = document.querySelector(".foldername").value;
+            const foldername = document.querySelector("#foldername").value;
         });
 
         const filebutton = document.querySelector(".filebutton");

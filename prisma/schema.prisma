@@ -18,8 +18,24 @@ model users {
   id       Int    @id @default(autoincrement())
   username String @db.VarChar(255)
   password String @db.VarChar(255)
-  
+
   @@unique([username])
+}
+
+model folders {
+  id          Int    @id @default(autoincrement())
+  user_id     Int
+  folder_id   Int
+  folder_name String @db.VarChar(255)
+}
+
+model files {
+  id          Int    @id @default(autoincrement())
+  user_id     Int
+  folder_id   Int
+  name        String @db.VarChar(255)
+  size        String @db.VarChar(255)
+  upload_time String @db.VarChar(255)
 }
 
 model Session {
