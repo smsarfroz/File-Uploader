@@ -60,9 +60,42 @@ async function getfilebyid(id) {
         console.error(error);
     }
 }
+
+async function addfolder(user_id, folder_id, folder_name) {
+    try {
+        const folder = await prisma.folders.create({
+            data : {
+                user_id : user_id,
+                folder_id : folder_id,
+                folder_name : folder_name
+            }
+        })
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function addfile(user_id, folder_id, name, size, upload_time) {
+    try {
+        const file = await prisma.files.create({
+            data : {
+                user_id : user_id,
+                folder_id : folder_id,
+                name : name,
+                size : size, 
+                upload_time : upload_time
+            }
+        })
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export default {
     adduser,
     getcontentbyfolder_id,
     getfolderbyid,
-    getfilebyid
+    getfilebyid,
+    addfolder,
+    addfile
 }

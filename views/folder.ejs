@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title><%- folder.folder_name %></title>
+</head>
+<body>
+    <%- include('navbar') %>
+
+    <%if (locals.currentUser) {%>
+        <h2><%- folder.folder_name %></h2>
+
+        <div class="uploadfilesfolder">
+            <button class="filebutton">Add a new File</button>
+            <button class="folderbutton">Add a new Folder</button>
+        </div>
+
+        <dialog class="addfolder">
+            <h3>Add a new Folder</h3>
+            <div>
+                <label for="foldername">Folder name</label>
+                <input type="text" name="foldername" id="foldername">
+            </div>
+            <a href="/folder/"><button class="addbuttonfolder">Add</button></a>
+        </dialog>
+
+        <dialog class="addfile">
+            <form action="/uploadfile" method="POST" enctype="multipart/form-data">
+                <div>
+                    <label for="avatar">Choose a file to upload:</label><br />
+                    <input id="avatar" type="file" name="uploaded_file" accept="*/*" />
+                </div>
+                <button type="submit" class="uploadfilebutton">Upload</button>
+            </form>
+        </dialog>
+    <%}%>
+    <%- include('footer') %>
+
+    <script>
+        const folderbutton = document.querySelector(".folderbutton");
+        const addfolder = document.querySelector(".addfolder");
+        
+        folderbutton.addEventListener('click', () => {
+            addfolder.showModal();
+        })
+        const addbuttonfolder = document.querySelector(".addbuttonfolder");
+        addbuttonfolder.addEventListener('click', () => {
+            addfolder.close();
+            const foldername = document.querySelector("#foldername").value;
+        });
+
+        const filebutton = document.querySelector(".filebutton");
+        const addfile = document.querySelector(".addfile");
+
+        filebutton.addEventListener('click', () => {
+            addfile.showModal();
+        })
+
+        const uploadfilebutton = document.querySelector(".uploadfilebutton");
+        uploadfilebutton.addEventListener('click', () => {
+            addfile.close();
+        })
+    </script>
+</body>
+</html>
