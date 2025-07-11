@@ -11,7 +11,7 @@ import { dirname } from 'node:path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const assetsPath = path.join(__dirname, "public");
+const assetsPath = path.join(__dirname, "/");
 app.use(express.static(assetsPath));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
