@@ -3,6 +3,8 @@ import passport from "../config/passport.js";
 import prisma from "../queries.js";
 import bcrypt from "bcryptjs";
 import multer from "multer";
+import formatBytes from '../helpers/formatBytes.js';
+
 const upload = multer({ dest: './public/data/uploads/' })
 
 const indexRouter = Router();
@@ -53,15 +55,32 @@ indexRouter.get("/logout", (req, res, next) => {
     })
 })
 
-indexRouter.post("/uploadfile", upload.single('uploaded_file'), function (req, res) {
-    console.log(req.file, req.body);
+indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res) => {
+    try {
+        console.log(req.file, req.body);
+        const {originalname, size} = req.file;
+        const Size = formatBytes(size);
+        const upload_time = new Date().toLocaleString();
+        await prisma.addfile(res.locals.user_id, res.locals.id, originalname, Size, upload_time);
+    } catch (error) {
+        console.error(error);
+    }
 })
+
+indexRouter.post("/folder", async(req, res) => {
+    try {
+        const { name } = req.body;
+        await prisma.addfolder(res.locals.user_id, res.locals.id, name);
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 indexRouter.get("/folder/:folderid", async(req, res) => {
     const { folderid } = req.params;
     const folder = await prisma.getfolderbyid(folderid);
     const content = await prisma.getcontentbyfolder_id(folderid);
-    res.render("", {folder: folder, content: content});
+    res.render("folder", {user_id: res.locals.user_id, folder: folder, content: content});
 });
 
 indexRouter.get("/file/:fileid", async(req, res) => {
@@ -70,3 +89,4 @@ indexRouter.get("/file/:fileid", async(req, res) => {
 });
 
 export default indexRouter;
+

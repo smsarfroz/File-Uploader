@@ -61,13 +61,13 @@ async function getfilebyid(id) {
     }
 }
 
-async function addfolder(user_id, folder_id, folder_name) {
+async function addfolder(user_id, folder_id, name) {
     try {
         const folder = await prisma.folders.create({
             data : {
                 user_id : user_id,
                 folder_id : folder_id,
-                folder_name : folder_name
+                name : name
             }
         })
     } catch (error) {

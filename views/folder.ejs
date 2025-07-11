@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
-    <title><%- folder.folder_name %></title>
+    <title><%= folder.name %></title>
 </head>
 <body>
     <%- include('navbar') %>
@@ -19,11 +19,13 @@
 
         <dialog class="addfolder">
             <h3>Add a new Folder</h3>
-            <div>
-                <label for="foldername">Folder name</label>
-                <input type="text" name="foldername" id="foldername">
-            </div>
-            <a href="/folder/"><button class="addbuttonfolder">Add</button></a>
+            <form action="/folder" method="POST">
+                <div>
+                    <label for="foldername">Folder name</label>
+                    <input type="text" name="foldername" id="foldername">
+                </div>
+                <button class="addbuttonfolder" type="submit">Add</button>
+            </form>
         </dialog>
 
         <dialog class="addfile">
@@ -36,19 +38,29 @@
             </form>
         </dialog>
     <%}%>
+
+        <div class="contents">
+            <%content.map(doc => {%>
+                <%if (doc.hasOwnProperty('size')) {%>
+                    <a href="/folder/doc.id"><%=doc.name%></a>
+                <%} else {%>
+                    <a href="/file.id"><%=doc.name%></a>
+                <%}%>
+            <%});%>
+        </div>
     <%- include('footer') %>
+
 
     <script>
         const folderbutton = document.querySelector(".folderbutton");
         const addfolder = document.querySelector(".addfolder");
-        
+
         folderbutton.addEventListener('click', () => {
             addfolder.showModal();
         })
         const addbuttonfolder = document.querySelector(".addbuttonfolder");
         addbuttonfolder.addEventListener('click', () => {
             addfolder.close();
-            const foldername = document.querySelector("#foldername").value;
         });
 
         const filebutton = document.querySelector(".filebutton");
