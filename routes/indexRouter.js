@@ -11,7 +11,15 @@ const indexRouter = Router();
 
 indexRouter.get("/", async(req, res) => {
     try {
-        res.render("index");
+        const folderid = null;
+        const folder = {
+            id : null,
+            user_id : res.locals.user_id,
+            folder_id : null,
+            name : 'Documents'
+        }
+        const content = await prisma.getcontentbyfolder_id(folderid);
+        res.render("folder", {user_id: res.locals.user_id, folder: folder, content: content});
     } catch(error) {
         console.error(error);
         next( new Error(error));
@@ -61,7 +69,14 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
         const {originalname, size} = req.file;
         const Size = formatBytes(size);
         const upload_time = new Date().toLocaleString();
+        console.log(res.locals.user_id, res.locals.id, originalname, Size, upload_time);
         await prisma.addfile(res.locals.user_id, res.locals.id, originalname, Size, upload_time);
+
+        if (res.locals.id === null) {
+            res.redirect('/');
+        } else {
+            res.redirect(`/folder/${res.locals.id}`);
+        }
     } catch (error) {
         console.error(error);
     }
@@ -69,8 +84,14 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
 
 indexRouter.post("/folder", async(req, res) => {
     try {
-        const { name } = req.body;
-        await prisma.addfolder(res.locals.user_id, res.locals.id, name);
+        const { foldername } = req.body;
+        console.log(res.locals.user_id, res.locals.id, foldername);
+        await prisma.addfolder(res.locals.user_id, res.locals.id, foldername);
+        if (res.locals.id === null) {
+            res.redirect('/');
+        } else {
+            res.redirect(`/folder/${res.locals.id}`);
+        }
     } catch (error) {
         console.error(error);
     }
@@ -85,7 +106,9 @@ indexRouter.get("/folder/:folderid", async(req, res) => {
 
 indexRouter.get("/file/:fileid", async(req, res) => {
     const { fileid } = req.params; 
-    const file = await prisma.getfilebyid(fileid);
+    const id = parseInt(fileid);
+    const file = await prisma.getfilebyid(id);
+    console.log(file);
     res.render("file", {file: file});
 });
 

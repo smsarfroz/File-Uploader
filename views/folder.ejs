@@ -10,7 +10,7 @@
     <%- include('navbar') %>
 
     <%if (locals.currentUser) {%>
-        <h2><%- folder.folder_name %></h2>
+        <h2><%- folder.name %></h2>
 
         <div class="uploadfilesfolder">
             <button class="filebutton">Add a new File</button>
@@ -42,9 +42,9 @@
         <div class="contents">
             <%content.map(doc => {%>
                 <%if (doc.hasOwnProperty('size')) {%>
-                    <a href="/folder/doc.id"><%=doc.name%></a>
+                    <a href="/folder/<%=doc.id%>"><%=doc.name%></a>
                 <%} else {%>
-                    <a href="/file.id"><%=doc.name%></a>
+                    <a href="/file/<%=doc.id%>"><%=doc.name%></a>
                 <%}%>
             <%});%>
         </div>

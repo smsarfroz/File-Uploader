@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(async(req, res, next) => {
     // console.log(req.user);
+    console.log("locals information");
     const { id } = req.params;
     if (req.user) {
         res.locals.currentUser = req.user.username;
@@ -29,8 +30,10 @@ app.use(async(req, res, next) => {
     }
     if (id) {
       res.locals.id = id;
+    } else {
+      res.locals.id = null;
     }
-    // console.log(res.locals.currentUser);
+    console.log(res.locals.currentUser, res.locals.user_id, res.locals.id);
     next();
 });
 
