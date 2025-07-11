@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=file.name%></title>
+</head>
+<body>
+    <%- include('navbar') %>
+        <h3><%= file.name %></h3>
+        
+        <div>
+            <div>
+                <button>Download</button>
+                <button>Delete</button>
+            </div>
+            <p><b>Uploaded on: </b><%= file.upload_time %></p>
+            <p><b>Size: </b><%= file.size %></p>
+        </div>
+    <%- include('footer') %>
+</body>
+</html>

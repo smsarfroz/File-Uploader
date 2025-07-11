@@ -85,7 +85,8 @@ indexRouter.get("/folder/:folderid", async(req, res) => {
 
 indexRouter.get("/file/:fileid", async(req, res) => {
     const { fileid } = req.params; 
-
+    const file = await prisma.getfilebyid(fileid);
+    res.render("file", {file: file});
 });
 
 export default indexRouter;
