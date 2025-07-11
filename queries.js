@@ -86,6 +86,7 @@ async function addfile(user_id, folder_id, name, size, upload_time) {
                 upload_time : upload_time
             }
         })
+        return file;
     } catch (error) {
         console.error(error);
     }
