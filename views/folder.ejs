@@ -24,6 +24,9 @@
                     <label for="foldername">Folder name</label>
                     <input type="text" name="foldername" id="foldername">
                 </div>
+                
+                <input type="hidden" value="<%=folder.id%>" name="parentfolderid">
+
                 <button class="addbuttonfolder" type="submit">Add</button>
             </form>
         </dialog>

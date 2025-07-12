@@ -88,13 +88,16 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
 
 indexRouter.post("/folder", async(req, res) => {
     try {
-        const { foldername } = req.body;
-        console.log(res.locals.user_id, res.locals.id, foldername);
-        await prisma.addfolder(res.locals.user_id, res.locals.id, foldername);
-        if (res.locals.id === null) {
+        const { foldername, parentfolderid } = req.body;
+        console.log('req.body', req.body);
+        console.log('parentfolderid', parentfolderid);
+        const folderidInt = parseInt(parentfolderid);
+        console.log(res.locals.user_id, folderidInt, foldername);
+        await prisma.addfolder(res.locals.user_id, folderidInt, foldername);
+        if (folderidInt === null) {
             res.redirect('/');
         } else {
-            res.redirect(`/folder/${res.locals.id}`);
+            res.redirect(`/folder/${folderidInt}`);
         }
     } catch (error) {
         console.error(error);
