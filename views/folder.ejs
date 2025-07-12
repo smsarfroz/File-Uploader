@@ -34,6 +34,8 @@
                     <label for="avatar">Choose a file to upload:</label><br />
                     <input id="avatar" type="file" name="uploaded_file" accept="*/*" />
                 </div>
+
+                <input type="hidden" value="<%=folder.id%>" name="folderid">
                 <button type="submit" class="uploadfilebutton">Upload</button>
             </form>
         </dialog>
