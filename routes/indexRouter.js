@@ -11,7 +11,6 @@ const indexRouter = Router();
 
 indexRouter.get("/", async(req, res) => {
     try {
-        console.log("inside / router");
         const folderid = null;
         const folder = {
             id : null,
@@ -20,8 +19,6 @@ indexRouter.get("/", async(req, res) => {
             name : 'Documents'
         }
         const content = await prisma.getcontentbyfolder_id(folderid);
-        console.log("content");
-        console.log(content);
         res.render("folder", {user_id: res.locals.user_id, folder: folder, content: content});
     } catch(error) {
         console.error(error);
@@ -77,6 +74,7 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
 
         console.log(file);
 
+        console.log(res.locals.id);
         if (res.locals.id === null) {
             res.redirect('/');
         } else {
@@ -122,8 +120,20 @@ indexRouter.get("/file/:fileid", async(req, res) => {
         const { fileid } = req.params; 
         const id = parseInt(fileid);
         const file = await prisma.getfilebyid(id);
-        console.log(file);
+        // console.log(file);
         res.render("file", {file: file});
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+indexRouter.get("/file/:fileid/delete", async(req, res) => {
+    try {
+        const { fileid } = req.params; 
+        const id = parseInt(fileid);
+        const deletefile = await prisma.deletefilebyid(id);
+        // console.log('deletefile', deletefile);
+        res.redirect('/');
     } catch (error) {
         console.error(error);
     }

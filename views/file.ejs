@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
     <title><%=file.name%></title>
 </head>
 <body>
@@ -12,7 +13,7 @@
         <div>
             <div>
                 <button>Download</button>
-                <button>Delete</button>
+                <a href="/file/<%=file.id%>/delete"><button>Delete</button></a>
             </div>
             <p><b>Uploaded on: </b><%= file.upload_time %></p>
             <p><b>Size: </b><%= file.size %></p>

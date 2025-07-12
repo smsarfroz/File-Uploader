@@ -28,7 +28,7 @@ async function getcontentbyfolder_id(id) {
             }
         })
         const content = [...folders, ...files];
-        console.log(content);
+        // console.log(content);
         return content;
     } catch (error) {
         console.error(error);
@@ -92,11 +92,25 @@ async function addfile(user_id, folder_id, name, size, upload_time) {
     }
 }
 
+async function deletefilebyid(id) {
+    try {
+        const deletefile = await prisma.files.delete({
+            where: {
+                id: id,
+            },
+        })
+        return deletefile;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export default {
     adduser,
     getcontentbyfolder_id,
     getfolderbyid,
     getfilebyid,
     addfolder,
-    addfile
+    addfile,
+    deletefilebyid,
 }

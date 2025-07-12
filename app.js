@@ -11,7 +11,7 @@ import { dirname } from 'node:path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const assetsPath = path.join(__dirname, "/");
+const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -21,6 +21,8 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(async(req, res, next) => {
+    console.log('req.params');
+    console.log(req.params);
     const { id } = req.params;
     if (req.user) {
         res.locals.currentUser = req.user.username;
