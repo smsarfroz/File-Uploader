@@ -105,6 +105,24 @@ async function deletefilebyid(id) {
     }
 }
 
+async function deletefolderanditscontentsbyid(id) {
+    try {
+        const deletecontent = await prisma.files.deleteMany({
+            where: {
+                folder_id: id
+            }
+        })
+        const deletefolder = await prisma.folders.delete({
+            where: {
+                id: id
+            }
+        })
+        console.log('deletecontent', deletecontent);
+        console.log('deletefolder', deletefolder);
+    } catch (error) {
+        console.error(error);
+    }
+}
 export default {
     adduser,
     getcontentbyfolder_id,
@@ -113,4 +131,5 @@ export default {
     addfolder,
     addfile,
     deletefilebyid,
+    deletefolderanditscontentsbyid
 }

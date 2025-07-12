@@ -15,6 +15,9 @@
         <div class="uploadfilesfolder">
             <button class="filebutton">Add a new File</button>
             <button class="folderbutton">Add a new Folder</button>
+            <%if (folder.id !== null) {%>
+                <a href="/folder/<%= folder.id %>/delete"><button>Delete</button></a>
+            <%}%>
         </div>
 
         <dialog class="addfolder">

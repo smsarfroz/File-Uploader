@@ -143,5 +143,16 @@ indexRouter.get("/file/:fileid/delete", async(req, res) => {
     }
 });
 
+indexRouter.get("/folder/:folderid/delete", async(req, res) => {
+    try {
+        const { folderid } = req.params; 
+        const id = parseInt(folderid);
+        await prisma.deletefolderanditscontentsbyid(id);
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 export default indexRouter;
 
