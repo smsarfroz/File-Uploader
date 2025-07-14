@@ -20,10 +20,7 @@ app.use(getSessionMiddleware);
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-
 app.use(async(req, res, next) => {
-    console.log('req.params');
-    console.log(req.params);
     if (req.user) {
         res.locals.currentUser = req.user.username;
         res.locals.user_id = req.user.id;
@@ -32,7 +29,6 @@ app.use(async(req, res, next) => {
 });
 
 app.use("/", indexRouter);
-
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
