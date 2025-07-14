@@ -31,6 +31,7 @@
                 <input type="hidden" value="<%=folder.id%>" name="parentfolderid">
 
                 <button class="addbuttonfolder" type="submit">Add</button>
+                <button class="cancelbuttonfolder" type="button">Cancel</button>
             </form>
         </dialog>
 
@@ -43,6 +44,7 @@
 
                 <input type="hidden" value="<%=folder.id%>" name="folderid">
                 <button type="submit" class="uploadfilebutton">Upload</button>
+                <button class="cancelbuttonfile" type="button">Cancel</button>
             </form>
         </dialog>
     <%}%>
@@ -82,6 +84,22 @@
         uploadfilebutton.addEventListener('click', () => {
             addfile.close();
         })
+
+        const cancelbuttonfolder = document.querySelector(".cancelbuttonfolder");
+        const cancelbuttonfile = document.querySelector(".cancelbuttonfile");
+        const foldername = document.querySelector("#foldername");
+        const uploaded_file = document.querySelector("#avatar");
+
+        cancelbuttonfolder.addEventListener('click', () => {
+            addfolder.close();
+            foldername.value = null;
+        })
+
+        cancelbuttonfile.addEventListener('click', () => {
+            addfile.close();
+            uploaded_file.value = null;
+        })
     </script>
 </body>
 </html>
+

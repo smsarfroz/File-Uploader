@@ -4,6 +4,7 @@ import prisma from "../queries.js";
 import bcrypt from "bcryptjs";
 import multer from "multer";
 import formatBytes from '../helpers/formatBytes.js';
+import supabase from "../config/supabaseClient.js";
 
 const upload = multer({ dest: './public/data/uploads/' })
 
@@ -65,12 +66,16 @@ indexRouter.get("/logout", (req, res, next) => {
 
 indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res) => {
     try {
-        // console.log(req.file, req.body);
+        console.log(req.file, req.body);
         const {originalname, size} = req.file;
         const { folderid } = req.body;
         const folderidInt = parseInt(folderid);
         const Size = formatBytes(size);
         const upload_time = new Date().toLocaleString();
+
+        const { data, error } = await supabase.storage
+            .from('')
+
         console.log(res.locals.user_id, folderidInt, originalname, Size, upload_time);
         const file = await prisma.addfile(res.locals.user_id, folderidInt, originalname, Size, upload_time);
 

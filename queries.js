@@ -117,8 +117,8 @@ async function deletefolderanditscontentsbyid(id) {
                 id: id
             }
         })
-        console.log('deletecontent', deletecontent);
-        console.log('deletefolder', deletefolder);
+        // console.log('deletecontent', deletecontent);
+        // console.log('deletefolder', deletefolder);
     } catch (error) {
         console.error(error);
     }

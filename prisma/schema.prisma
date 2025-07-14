@@ -36,6 +36,7 @@ model files {
   name        String @db.VarChar(255)
   size        String @db.VarChar(255)
   upload_time String @db.VarChar(255)
+  URL         String @db.VarChar(255)
 }
 
 model Session {
