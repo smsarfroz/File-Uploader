@@ -5,7 +5,7 @@ import { PrismaClient } from '../generated/prisma/index.js'
 const prisma = new PrismaClient();
 
 const sessionStore = new PrismaSessionStore(prisma, {
-    checkPeriod: 2 * 60 * 1000,  //ms
+    checkPeriod: 2 * 60 * 1000,  
     dbRecordIdIsSessionId: true,
     dbRecordIdFunction: undefined,
   }
@@ -17,7 +17,7 @@ sessionStore.on('error', (error) => {
 
 const getSessionMiddleware = session({
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000 // ms
+    maxAge: 7 * 24 * 60 * 60 * 1000 
   },
   secret: process.env.SESSION_SECRET || 'fallback-session-secret',
   resave: true,

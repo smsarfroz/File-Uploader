@@ -3,9 +3,9 @@ import { PrismaClient } from './generated/prisma/index.js'
 const prisma = new PrismaClient()
 
 async function main() {
-  const allMessages = await prisma.users.findMany();
+  // const allMessages = await prisma.users.findMany();
 
-  console.dir(allMessages, { depth: null });
+  // console.dir(allMessages, { depth: null });
 }
 
 main()

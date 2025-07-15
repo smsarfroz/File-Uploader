@@ -67,7 +67,7 @@ indexRouter.get("/logout", (req, res, next) => {
 
 indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res) => {
     try {
-        console.log(req.file, req.body);
+        // console.log(req.file, req.body);
         const {originalname, size, path} = req.file;
         const { folderid } = req.body;
         const folderidInt = parseInt(folderid);
@@ -76,7 +76,7 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
         const bucketname = 'files';
         const fileBuffer = fs.readFileSync(path);
         
-        console.log(fileBuffer);
+        // console.log(fileBuffer);
 
         const { data, error } = await supabase.storage
             .from(bucketname)
@@ -89,18 +89,20 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
             return res.status(500).send('Error uploading to Supabase.');
         }
 
-        const { data: publicUrlData } = supabase.storage
+        const { data: publicUrlData } =  supabase.storage
             .from('files')
             .getPublicUrl(path);
 
         const publicUrl = publicUrlData.publicUrl;
-
-        res.status(200).json({ message: 'File uploaded successfully', publicUrl});
+        
+        console.log(publicUrl);
+        console.log('datatype of publicurl: ', typeof(publicUrl));
+        // res.status(200).json({ message: 'File uploaded successfully', publicUrl});
 
         console.log(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl);
         const file = await prisma.addfile(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl);
 
-        console.log(file);
+        // console.log(file);
 
         if (folderidInt === null) {
             res.redirect('/');

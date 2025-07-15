@@ -75,7 +75,7 @@ async function addfolder(user_id, folder_id, name) {
     }
 }
 
-async function addfile(user_id, folder_id, name, size, upload_time) {
+async function addfile(user_id, folder_id, name, size, upload_time, publicUrl) {
     try {
         const file = await prisma.files.create({
             data : {
@@ -83,7 +83,8 @@ async function addfile(user_id, folder_id, name, size, upload_time) {
                 folder_id : folder_id,
                 name : name,
                 size : size, 
-                upload_time : upload_time
+                upload_time : upload_time,
+                URL: publicUrl
             }
         })
         return file;
