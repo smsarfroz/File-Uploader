@@ -6,6 +6,9 @@ import multer from "multer";
 import formatBytes from '../helpers/formatBytes.js';
 import supabase from "../config/supabaseClient.js";
 import fs from 'fs';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+import path from "node:path";
 
 const upload = multer({ dest: './public/data/uploads/' });
 
@@ -88,7 +91,7 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
             console.error('Supabase upload error:', error);
             return res.status(500).send('Error uploading to Supabase.');
         }
-
+        console.log('path: ', path);
         const { data: publicUrlData } =  supabase.storage
             .from('files')
             .getPublicUrl(path);
@@ -99,8 +102,8 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
         console.log('datatype of publicurl: ', typeof(publicUrl));
         // res.status(200).json({ message: 'File uploaded successfully', publicUrl});
 
-        console.log(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl);
-        const file = await prisma.addfile(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl);
+        console.log(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl, path);
+        const file = await prisma.addfile(res.locals.user_id, folderidInt, originalname, Size, upload_time, publicUrl, path);
 
         // console.log(file);
 
@@ -119,15 +122,33 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
     }
 })
 
+indexRouter.get("/file/:fileid/download", async(req, res) => {
+    try {
+        const { fileid } = req.params; 
+        const id = parseInt(fileid);
+        const URL = await prisma.getfileurlbyid(id);
+        
+        res.download(URL, (error) => {
+            console.error(error);
+        })
+        res.redirect(`/file/${fileid}`);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 indexRouter.post("/folder", async(req, res) => {
     try {
         const { foldername, parentfolderid } = req.body;
         console.log('req.body', req.body);
         console.log('parentfolderid', parentfolderid);
-        const folderidInt = parseInt(parentfolderid);
+        let folderidInt = parseInt(parentfolderid);
+        if (parentfolderid === '') {
+            folderidInt = null;
+        }
         console.log(res.locals.user_id, folderidInt, foldername);
         await prisma.addfolder(res.locals.user_id, folderidInt, foldername);
-        if (folderidInt === null) {
+        if (folderidInt == null) {
             res.redirect('/');
         } else {
             res.redirect(`/folder/${folderidInt}`);
@@ -175,6 +196,7 @@ indexRouter.get("/file/:fileid/delete", async(req, res) => {
         console.error(error);
     }
 });
+
 
 indexRouter.get("/folder/:folderid/delete", async(req, res) => {
     try {

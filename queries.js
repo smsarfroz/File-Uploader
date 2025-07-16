@@ -75,7 +75,7 @@ async function addfolder(user_id, folder_id, name) {
     }
 }
 
-async function addfile(user_id, folder_id, name, size, upload_time, publicUrl) {
+async function addfile(user_id, folder_id, name, size, upload_time, publicUrl, path) {
     try {
         const file = await prisma.files.create({
             data : {
@@ -84,7 +84,8 @@ async function addfile(user_id, folder_id, name, size, upload_time, publicUrl) {
                 name : name,
                 size : size, 
                 upload_time : upload_time,
-                URL: publicUrl
+                URL: publicUrl,
+                path: path
             }
         })
         return file;
@@ -124,6 +125,28 @@ async function deletefolderanditscontentsbyid(id) {
         console.error(error);
     }
 }
+
+async function getfileurlbyid(id) {
+    try {
+        const file = await getfilebyid(id);
+        console.log('file: ', file);
+        const URL = file.URL;
+        return URL;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function getfilepathbyid(id) {
+    try {
+        const file = await getfilebyid(id);
+        const path = file.path;
+        return path;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export default {
     adduser,
     getcontentbyfolder_id,
@@ -132,5 +155,7 @@ export default {
     addfolder,
     addfile,
     deletefilebyid,
-    deletefolderanditscontentsbyid
+    deletefolderanditscontentsbyid,
+    getfileurlbyid,
+    getfilepathbyid
 }
