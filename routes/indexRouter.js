@@ -127,7 +127,7 @@ indexRouter.get("/file/:fileid/download", async(req, res) => {
         const { fileid } = req.params; 
         const id = parseInt(fileid);
         const URL = await prisma.getfileurlbyid(id);
-        
+
         res.download(URL, (error) => {
             console.error(error);
         })
@@ -161,9 +161,16 @@ indexRouter.post("/folder", async(req, res) => {
 indexRouter.get("/folder/:folderid", async(req, res) => {
     try {
         const { folderid } = req.params;
-        console.log('folderid', folderid);
-        const id = parseInt(folderid);
-        const folder = await prisma.getfolderbyid(id);
+        let id = parseInt(folderid);
+        let folder = {
+            id : null,
+            user_id : res.locals.user_id,
+            folder_id : null,
+            name : 'Documents'
+        }
+        if (!Number.isNaN(id)) {
+            folder = await prisma.getfolderbyid(id);
+        }
         const content = await prisma.getcontentbyfolder_id(id);
         console.log('folder', folder);
         console.log('content', content);
