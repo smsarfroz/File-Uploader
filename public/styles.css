@@ -118,6 +118,29 @@ h2 {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.filecontainer {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.manipulatefile {
+  margin-top: 2vw;
+  display: flex;
+  gap: 2vw;
+}
+
+.filedetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+  margin-top: 1.5vw;
+  justify-content: center;
+  align-items: center;
+}
 
 button {
   padding: 0.6em 2em;
