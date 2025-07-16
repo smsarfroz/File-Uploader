@@ -9,6 +9,9 @@ import fs from 'fs';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import path from "node:path";
+import Stream from "node:stream";
+import { pipeline } from 'node:stream/promises';
+import { Readable } from "node:stream";
 
 const upload = multer({ dest: './public/data/uploads/' });
 
@@ -126,12 +129,29 @@ indexRouter.get("/file/:fileid/download", async(req, res) => {
     try {
         const { fileid } = req.params; 
         const id = parseInt(fileid);
+        const file = await prisma.getfilebyid(id);
         const URL = await prisma.getfileurlbyid(id);
+        const path = await prisma.getfilepathbyid(id);
 
-        res.download(URL, (error) => {
-            console.error(error);
-        })
-        res.redirect(`/file/${fileid}`);
+        const { data, error } = await supabase
+            .storage
+            .from('files')
+            .download(path) 
+
+        if (error) {
+            console.error('Supabase download error');
+            return res.status(500).send('error downloading the file');
+        }
+        if (!data) {
+            return res.status(404).json({ error: 'file not found' });
+        }
+        res.setHeader("Content-Disposition", `attachment; filename="${file.name}"`);
+        res.setHeader("Content-Type", file.mime_type || "application/octet-stream");
+
+        const buffer = await data.arrayBuffer();
+        const stream = Readable.from(Buffer.from(buffer));
+
+        stream.pipe(res);
     } catch (error) {
         console.error(error);
     }
