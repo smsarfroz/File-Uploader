@@ -15,16 +15,18 @@ async function adduser(username, password) {
     }
 }
 
-async function getcontentbyfolder_id(id) {
+async function getcontentbyfolder_id(id, user_id) {
     try {
         const folders = await prisma.folders.findMany({
             where: {
-                folder_id: id
+                folder_id: id,
+                user_id: user_id
             }
         })
         const files = await prisma.files.findMany({
             where: {
-                folder_id: id
+                folder_id: id,
+                user_id: user_id
             }
         })
         const content = [...folders, ...files];
@@ -35,11 +37,12 @@ async function getcontentbyfolder_id(id) {
     }
 }
 
-async function getfolderbyid(id) {
+async function getfolderbyid(id, user_id) {
     try {
         const folder = await prisma.folders.findUnique({
             where : {
-                id : id
+                id : id,
+                user_id: user_id
             }
         })
         return folder;
@@ -48,11 +51,12 @@ async function getfolderbyid(id) {
     }
 }
 
-async function getfilebyid(id) {
+async function getfilebyid(id, user_id) {
     try {
         const file = await prisma.files.findUnique({
             where : {
-                id : id
+                id : id,
+                user_id: user_id
             }
         })
         return file;
@@ -99,6 +103,7 @@ async function deletefilebyid(id) {
         const deletefile = await prisma.files.delete({
             where: {
                 id: id,
+                user_id: user_id
             },
         })
         return deletefile;
@@ -111,12 +116,14 @@ async function deletefolderanditscontentsbyid(id) {
     try {
         const deletecontent = await prisma.files.deleteMany({
             where: {
-                folder_id: id
+                folder_id: id,
+                user_id: user_id
             }
         })
         const deletefolder = await prisma.folders.delete({
             where: {
-                id: id
+                id: id,
+                user_id: user_id
             }
         })
         // console.log('deletecontent', deletecontent);

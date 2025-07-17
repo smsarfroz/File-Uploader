@@ -18,7 +18,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch app.js"
+    "start": "node app.js"
   },
   "compilerOptions": {
     "allowImportingTsExtensions": true,

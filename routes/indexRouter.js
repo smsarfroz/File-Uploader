@@ -19,6 +19,7 @@ const indexRouter = Router();
 
 indexRouter.get("/", async(req, res) => {
     try {
+        const user_id = res.locals.user_id;
         const folderid = null;
         const folder = {
             id : null,
@@ -26,7 +27,8 @@ indexRouter.get("/", async(req, res) => {
             folder_id : null,
             name : 'Documents'
         }
-        const content = await prisma.getcontentbyfolder_id(folderid);
+        console.log(res.locals);
+        const content = await prisma.getcontentbyfolder_id(folderid, user_id);
         res.render("folder", {user_id: res.locals.user_id, folder: folder, content: content});
     } catch(error) {
         console.error(error);
@@ -127,9 +129,10 @@ indexRouter.post("/uploadfile", upload.single('uploaded_file'), async (req, res)
 
 indexRouter.get("/file/:fileid/download", async(req, res) => {
     try {
+        const user_id = res.locals.user_id;
         const { fileid } = req.params; 
         const id = parseInt(fileid);
-        const file = await prisma.getfilebyid(id);
+        const file = await prisma.getfilebyid(id, user_id);
         const URL = await prisma.getfileurlbyid(id);
         const path = await prisma.getfilepathbyid(id);
 
@@ -180,6 +183,7 @@ indexRouter.post("/folder", async(req, res) => {
 
 indexRouter.get("/folder/:folderid", async(req, res) => {
     try {
+        const user_id = res.locals.user_id;
         const { folderid } = req.params;
         let id = parseInt(folderid);
         let folder = {
@@ -189,9 +193,9 @@ indexRouter.get("/folder/:folderid", async(req, res) => {
             name : 'Documents'
         }
         if (!Number.isNaN(id)) {
-            folder = await prisma.getfolderbyid(id);
+            folder = await prisma.getfolderbyid(id, user_id);
         }
-        const content = await prisma.getcontentbyfolder_id(id);
+        const content = await prisma.getcontentbyfolder_id(id, user_id);
         console.log('folder', folder);
         console.log('content', content);
         res.render("folder", {user_id: res.locals.user_id, folder: folder, content: content});
@@ -202,9 +206,10 @@ indexRouter.get("/folder/:folderid", async(req, res) => {
 
 indexRouter.get("/file/:fileid", async(req, res) => {
     try {
+        const user_id = res.locals.user_id; 
         const { fileid } = req.params; 
         const id = parseInt(fileid);
-        const file = await prisma.getfilebyid(id);
+        const file = await prisma.getfilebyid(id, user_id);
         console.log(file);
         res.render("file", {file: file});
     } catch (error) {
